@@ -1,0 +1,57 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern":
+	[
+		"___",
+		"IRI",
+		"S S"
+	],
+	"key":
+	{
+		"_":
+		[
+			{
+				"item": "minecraft:wooden_slab",
+				"data": 0
+			},
+			{
+				"item": "minecraft:wooden_slab",
+				"data": 1
+			},
+			{
+				"item": "minecraft:wooden_slab",
+				"data": 2
+			},
+			{
+				"item": "minecraft:wooden_slab",
+				"data": 3
+			},
+			{
+				"item": "minecraft:wooden_slab",
+				"data": 4
+			},
+			{
+				"item": "minecraft:wooden_slab",
+				"data": 5
+			}
+		],
+		"I":
+		{
+			"item": "minecraft:iron_bars"
+		},
+		"R":
+		{
+			"item": "afm:resin"
+		},
+		"S":
+		{
+			"item": "minecraft:stone_slab",
+			"data": 0
+		}
+	},
+	"result":
+	{
+		"item": "afm:alchemists_table",
+		"count": 1
+	}
+}

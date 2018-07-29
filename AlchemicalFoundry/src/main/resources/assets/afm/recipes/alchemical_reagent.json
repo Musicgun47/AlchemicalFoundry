@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	
+	"ingredients":
+	[
+		{
+			"item": "minecraft:glowstone_dust"
+		},
+		{
+			"item": "minecraft:redstone"
+		},
+		{
+			"item": "minecraft:nether_wart"
+		},
+		{
+			"data": 15,
+			"item": "minecraft:dye"
+		},
+		{
+			"item": "afm:jaded_nectar"
+		}
+	],
+	"result": 
+	{
+		"item": "afm:alchemical_reagent",
+		"count": 4
+	}
+}

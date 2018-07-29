@@ -1,0 +1,16 @@
+//Items
+item.resin.name=Resin
+item.amber.name=Amber
+item.jaded_nectar.name=Jaded Nectar
+item.alchemical_powder.name=Alchemical Powder
+item.alchemical_reagent.name=Alchemical Reagent
+item.coal_dust.name=Coal Dust
+item.copper_ingot.name=Copper Ingot
+item.tin_ingot.name=Tin Ingot
+
+//Blocks
+tile.alchemists_table.name=Alchemist's Table
+tile.copper_ore.name=Copper Ore
+tile.tin_ore.name=Tin Ore
+tile.copper_block.name=Copper Block
+tile.tin_block.name=Tin Block
