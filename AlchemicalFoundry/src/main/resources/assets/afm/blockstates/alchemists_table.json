@@ -1,10 +1,10 @@
 {
 	"variants":
 	{
-		"-connections=0,east=false,facing=north,north=false,south=false,west=false": {"model": "afm:alchemists_table"},
-		"-connections=0,east=false,facing=south,north=false,south=false,west=false": {"model": "afm:alchemists_table"},
-		"-connections=0,east=false,facing=east,north=false,south=false,west=false": {"model": "afm:alchemists_table", "y": 90},
-		"-connections=0,east=false,facing=west,north=false,south=false,west=false": {"model": "afm:alchemists_table", "y": 90},
+		"connections=0,east=false,facing=north,north=false,south=false,west=false": {"model": "afm:alchemists_table"},
+		"connections=0,east=false,facing=south,north=false,south=false,west=false": {"model": "afm:alchemists_table"},
+		"connections=0,east=false,facing=east,north=false,south=false,west=false": {"model": "afm:alchemists_table", "y": 90},
+		"connections=0,east=false,facing=west,north=false,south=false,west=false": {"model": "afm:alchemists_table", "y": 90},
 		"connections=1,east=false,facing=north,north=false,south=false,west=true": {"model": "afm:alchemists_table_att"},
 		"connections=1,east=true,facing=south,north=false,south=false,west=false": {"model": "afm:alchemists_table_att", "y": 180},
 		"connections=1,east=false,facing=east,north=true,south=false,west=false": {"model": "afm:alchemists_table_att", "y": 90},
