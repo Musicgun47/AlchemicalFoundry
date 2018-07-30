@@ -1,11 +1,12 @@
 {
+	"parent": "block/cube_all",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "blocks/alchemists_table_feet",
-		"1": "blocks/alchemists_table_legs",
-		"2": "blocks/alchemists_table_top_att",
-		"3": "blocks/alchemists_table_side",
-		"particle": "blocks/alchemists_table_feet"
+		"0": "afm:blocks/alchemists_table_feet",
+		"1": "afm:blocks/alchemists_table_legs",
+		"2": "afm:blocks/alchemists_table_top_att",
+		"3": "afm:blocks/alchemists_table_side",
+		"particle": "afm:blocks/alchemists_table_top_att"
 	},
 	"elements": [
 		{
