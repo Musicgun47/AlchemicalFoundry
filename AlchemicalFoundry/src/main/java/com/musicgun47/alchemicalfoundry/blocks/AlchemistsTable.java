@@ -19,10 +19,10 @@ import net.minecraft.world.World;
 
 public class AlchemistsTable extends BlockBase
 {
-	public static final PropertyBool NORTH = PropertyBool.create("north");
-	public static final PropertyBool SOUTH = PropertyBool.create("south");
-	public static final PropertyBool EAST = PropertyBool.create("east");
-	public static final PropertyBool WEST = PropertyBool.create("west");
+//	public static final PropertyBool NORTH = PropertyBool.create("north");
+//	public static final PropertyBool SOUTH = PropertyBool.create("south");
+//	public static final PropertyBool EAST = PropertyBool.create("east");
+//	public static final PropertyBool WEST = PropertyBool.create("west");
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	protected static final PropertyInteger CONNECTIONS = PropertyInteger.create("connections", 0, 2);
 	//net.minecraft.block.BlockFence
@@ -35,9 +35,7 @@ public class AlchemistsTable extends BlockBase
 		setHardness(3.0f);
 		setResistance(20.0f);
 		setHarvestLevel("axe", 1);
-		setDefaultState(this.blockState.getBaseState().withProperty(NORTH, Boolean.valueOf(false))
-				.withProperty(SOUTH, Boolean.valueOf(false)).withProperty(EAST, Boolean.valueOf(false))
-				.withProperty(WEST, Boolean.valueOf(false)).withProperty(FACING, EnumFacing.NORTH).withProperty(CONNECTIONS, 0));
+		setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(CONNECTIONS, 0));
 	}
 	
 	public boolean isOpaqueCube(IBlockState blockstate) 
@@ -48,7 +46,7 @@ public class AlchemistsTable extends BlockBase
 	@Override
 	public BlockStateContainer createBlockState() 
 	{
-		return new BlockStateContainer(this, NORTH, SOUTH, EAST, WEST, FACING, CONNECTIONS);
+		return new BlockStateContainer(this, FACING, CONNECTIONS);
 	}
 	
 	@Override
@@ -71,7 +69,7 @@ public class AlchemistsTable extends BlockBase
         {
         	for(EnumFacing facing : EnumFacing.Plane.HORIZONTAL)
         	{
-        		if(worldIn.getBlockState(pos.offset(facing)) instanceof AlchemistsTable && canConnect(worldIn, pos, facing) && 
+        		if(worldIn.getBlockState(pos.offset(facing)).getBlock() instanceof AlchemistsTable && canConnect(worldIn, pos, facing) && 
         				canConnect(worldIn, pos.offset(facing), facing.getOpposite()))
         		{
         			worldIn.setBlockState(pos, connect(worldIn, pos, facing), 1);
@@ -101,20 +99,16 @@ public class AlchemistsTable extends BlockBase
 		switch(facing)
 		{
 		case NORTH:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(NORTH, Boolean.valueOf(true))
-							.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
+						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
 						break;
 		case SOUTH:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(SOUTH, Boolean.valueOf(true)).withProperty(FACING, facing.rotateY())
-							.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
+						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
 						break;
 		case EAST:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(EAST, Boolean.valueOf(true)).withProperty(FACING, facing.rotateY())
-							.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
+						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
 						break;
 		case WEST:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(WEST, Boolean.valueOf(true)).withProperty(FACING, facing.rotateY())
-							.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
+						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
 						break;
 		}
 		return state;
@@ -150,44 +144,44 @@ public class AlchemistsTable extends BlockBase
 		return state;
 	}
 	
-	@SuppressWarnings("incomplete-switch")
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) 
-	{
-		EnumFacing facing = state.getValue(FACING);
-		if(state.getValue(CONNECTIONS) > 0)
-		{
-			if(state.getValue(CONNECTIONS) > 1)
-			{
-				if(facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH)
-				{
-					state = state.withProperty(EAST, Boolean.valueOf(true)).withProperty(WEST, Boolean.valueOf(true));
-				}
-				else
-				{
-					state = state.withProperty(NORTH, Boolean.valueOf(true)).withProperty(SOUTH, Boolean.valueOf(true));
-				}
-			}
-			else
-			{
-				switch(facing)
-				{
-				case NORTH :	state = state.withProperty(WEST, Boolean.valueOf(true));
-								break;
-				case SOUTH :	state = state.withProperty(EAST, Boolean.valueOf(true));
-								break;
-				case EAST :		state = state.withProperty(NORTH, Boolean.valueOf(true));
-								break;
-				case WEST :		state = state.withProperty(SOUTH, Boolean.valueOf(true));
-								break;
-				}
-			}
-		}
-		else
-		{
-			state = this.getDefaultState().withProperty(FACING, facing);
-		}
-		return state;
-	}
+//	@SuppressWarnings("incomplete-switch")
+//	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) 
+//	{
+//		EnumFacing facing = state.getValue(FACING);
+//		if(state.getValue(CONNECTIONS) > 0)
+//		{
+//			if(state.getValue(CONNECTIONS) > 1)
+//			{
+//				if(facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH)
+//				{
+//					state = state.withProperty(EAST, Boolean.valueOf(true)).withProperty(WEST, Boolean.valueOf(true));
+//				}
+//				else
+//				{
+//					state = state.withProperty(NORTH, Boolean.valueOf(true)).withProperty(SOUTH, Boolean.valueOf(true));
+//				}
+//			}
+//			else
+//			{
+//				switch(facing)
+//				{
+//				case NORTH :	state = state.withProperty(WEST, Boolean.valueOf(true));
+//								break;
+//				case SOUTH :	state = state.withProperty(EAST, Boolean.valueOf(true));
+//								break;
+//				case EAST :		state = state.withProperty(NORTH, Boolean.valueOf(true));
+//								break;
+//				case WEST :		state = state.withProperty(SOUTH, Boolean.valueOf(true));
+//								break;
+//				}
+//			}
+//		}
+//		else
+//		{
+//			state = this.getDefaultState().withProperty(FACING, facing);
+//		}
+//		return state;
+//	}
 	
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_,
