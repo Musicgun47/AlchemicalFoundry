@@ -51,6 +51,15 @@ public class AlchemistsTable extends BlockBase
 	{
 		EnumFacing placedFacing = placer.getHorizontalFacing();
 		worldIn.setBlockState(pos, state.withProperty(FACING, placedFacing.getOpposite()), 1);
+		for(EnumFacing facing : EnumFacing.Plane.HORIZONTAL)
+		{
+			if(worldIn.getBlockState(pos.offset(facing)).getBlock() instanceof AlchemistsTable && canConnect(worldIn, pos, facing)
+					&& canConnect(worldIn, pos.offset(facing), facing.getOpposite()))
+			{
+				worldIn.setBlockState(pos, connect(worldIn, pos, facing), 1);
+				worldIn.setBlockState(pos.offset(facing), connect(worldIn, pos.offset(facing), facing.getOpposite()), 1);
+			}
+		}
 	}
 	
 	@Override
@@ -61,15 +70,33 @@ public class AlchemistsTable extends BlockBase
             this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockToAir(pos);
         }
-        else if(!fromPos.equals(pos.up()))
+        else if(!fromPos.equals(pos.up()) && worldIn.getBlockState(pos).getValue(CONNECTIONS) > 0)
         {
         	for(EnumFacing facing : EnumFacing.Plane.HORIZONTAL)
         	{
-        		if(worldIn.getBlockState(pos.offset(facing)).getBlock() instanceof AlchemistsTable && canConnect(worldIn, pos, facing) && 
-        				canConnect(worldIn, pos.offset(facing), facing.getOpposite()))
+        		if(worldIn.getBlockState(pos).getValue(CONNECTIONS) == 1)
         		{
-        			worldIn.setBlockState(pos, connect(worldIn, pos, facing), 1);
-        			worldIn.setBlockState(pos.offset(facing), connect(worldIn, pos.offset(facing), facing.getOpposite()), 1);
+        			if(!(worldIn.getBlockState(pos.offset(facing)).getBlock() instanceof AlchemistsTable) &&
+        					worldIn.getBlockState(pos).getValue(FACING).equals(facing.rotateY()))
+        			{
+        				worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(CONNECTIONS, 0));
+        			}
+        		}
+        		else if(worldIn.getBlockState(pos).getValue(CONNECTIONS) == 2)
+        		{
+        			if(!(worldIn.getBlockState(pos.offset(facing)).getBlock() instanceof AlchemistsTable) &&
+        					!facing.getAxis().equals(worldIn.getBlockState(pos).getValue(FACING).getAxis()))
+        			{
+        				if(worldIn.getBlockState(pos).getValue(FACING).equals(facing.rotateY()))
+        				{
+	        				worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(CONNECTIONS, 1)
+	        					.withProperty(FACING, facing.rotateYCCW()));
+        				}
+        				else
+        				{
+        					worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(CONNECTIONS, 1));
+        				}
+        			}
         		}
         	}
         }
@@ -88,24 +115,16 @@ public class AlchemistsTable extends BlockBase
 		return true;
 	}
 	
-	@SuppressWarnings("incomplete-switch")
 	public IBlockState connect(IBlockAccess worldIn, BlockPos pos, EnumFacing facing)
 	{
 		IBlockState state = worldIn.getBlockState(pos);
-		switch(facing)
+		if(state.getValue(CONNECTIONS) == 0)
 		{
-		case NORTH:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
-						break;
-		case SOUTH:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
-						break;
-		case EAST:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
-						break;
-		case WEST:		if(state.getValue(CONNECTIONS) == 0) {state = state.withProperty(FACING, facing.rotateY());}
-						state = state.withProperty(CONNECTIONS, state.getValue(CONNECTIONS)+1);
-						break;
+			return state.withProperty(FACING, facing.rotateY()).withProperty(CONNECTIONS, 1);
+		}
+		else if(state.getValue(CONNECTIONS) == 1 && !state.getValue(FACING).equals(facing.rotateY()))
+		{
+			return state.withProperty(CONNECTIONS, 2);
 		}
 		return state;
 	}
